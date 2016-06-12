@@ -1,0 +1,44 @@
+diff --git a/gobgpd/main.go b/gobgpd/main.go
+index 8dddfa5..df1334a 100644
+--- a/gobgpd/main.go
++++ b/gobgpd/main.go
+@@ -191,6 +191,14 @@ func main() {
+ 		m.Serve()
+ 	} else if opts.ConfigFile != "" {
+ 		go config.ReadConfigfileServe(opts.ConfigFile, opts.ConfigType, configCh)
++	} else if opts.ConfigFile == "" {
++		newConfig := config.BgpConfigSet{}
++		newConfig.Zebra.Config.Enabled = true
++		newConfig.Zebra.Config.Url = "unix:/var/run/quagga/zserv.api"
++		log.Info("### Zebra.Config: ", newConfig.Zebra.Config)
++		if err := bgpServer.SetZebraConfig(newConfig.Zebra); err != nil {
++			log.Fatalf("failed to set zebra config: %s", err)
++		}
+ 	}
+ 
+ 	var c *config.BgpConfigSet = nil
+diff --git a/server/server.go b/server/server.go
+index 539c408..4d3a281 100644
+--- a/server/server.go
++++ b/server/server.go
+@@ -1576,13 +1576,13 @@ func (server *BgpServer) handleGrpc(grpcReq *GrpcRequest) []*SenderMsg {
+ 		return []*Peer{peer}, err
+ 	}
+ 
+-	if server.bgpConfig.Global.Config.As == 0 && grpcReq.RequestType != REQ_START_SERVER {
+-		grpcReq.ResponseCh <- &GrpcResponse{
+-			ResponseErr: fmt.Errorf("bgpd main loop is not started yet"),
+-		}
+-		close(grpcReq.ResponseCh)
+-		return nil
+-	}
++//	if server.bgpConfig.Global.Config.As == 0 && grpcReq.RequestType != REQ_START_SERVER {
++//		grpcReq.ResponseCh <- &GrpcResponse{
++//			ResponseErr: fmt.Errorf("bgpd main loop is not started yet"),
++//		}
++//		close(grpcReq.ResponseCh)
++//		return nil
++//	}
+ 
+ 	var err error
+ 

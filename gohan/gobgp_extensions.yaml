@@ -1,0 +1,50 @@
+extensions:
+- id: state_update_for_status
+  path: /v2.0/.*
+  code: |
+    gohan_regist_handler("post_state_update_in_transaction", function(context) {
+        var tx = context.transaction;
+        var gohan_state = gohan_db_state_fetch(tx, context.schema.ID, context.resource.id, "", true);
+        console.log("### gohan_state: " + JSON.stringify(gohan_state));
+        if (context.schema.ID === "router") {
+            context.resource.status = gohan_state.state.state.state_monitoring.router;
+            gohan_db_state_update(tx, 'router', context.resource);
+        } else if (context.schema.ID === "neighbor") {
+            context.resource.status = gohan_state.state.state.state_monitoring.neighbor;
+            gohan_db_state_update(tx, 'neighbor', context.resource);
+        } else if (context.schema.ID === "policyinfo") {
+            context.resource.status = gohan_state.state.state.state_monitoring.policyinfo;
+            gohan_db_state_update(tx, 'policyinfo', context.resource);
+        }
+    });
+- id: monitoring_update_for_status
+  path: /v2.0/.*
+  code: |
+    gohan_regist_handler("post_monitoring_update_in_transaction", function(context) {
+        var tx = context.transaction;
+        var gohan_state = gohan_db_state_fetch(tx, context.schema.ID, context.resource.id, "", true);
+        console.log("### gohan_state: " + JSON.stringify(gohan_state));
+        if (context.schema.ID === "router") {
+            context.resource.status = gohan_state.monitoring.router;
+            gohan_db_state_update(tx, 'router', context.resource);
+        } else if (context.schema.ID === "neighbor") {
+            context.resource.status = gohan_state.monitoring.neighbor;
+            gohan_db_state_update(tx, 'neighbor', context.resource);
+        } else if (context.schema.ID === "policyinfo") {
+            context.resource.status = gohan_state.monitoring.policyinfo;
+            gohan_db_state_update(tx, 'policyinfo', context.resource);
+        }
+    });
+- id: pending_create
+  path: /v2.0/.*
+  code: |
+    gohan_regist_handler("pre_create_in_transaction", function(context) {
+        context.resource.status = 'PENDING_CREATE';
+    });
+- id: pending_delete
+  path: /v2.0/.*
+  code: |
+    gohan_regist_handler("pre_delete_in_transaction", function(context) {
+        context.resource.status = 'PENDING_DELETE';
+    });
+

@@ -1,0 +1,30 @@
+database:
+    type: "sqlite3"
+    connection: "./gobgp.db"
+schemas:
+    - "./etc/gohan.json"
+    - "./etc/gohan_extension.yaml"
+    - "./gobgp_schema.yaml"
+    - "./gobgp_extensions.yaml"
+address: ":9998"
+tls:
+    enabled: false
+document_root: "/etc/gohan/"
+etcd:
+    - "http://127.0.0.1:2379"
+keystone:
+    use_keystone: true
+    fake: false
+    auth_url: "http://192.168.195.156:5000/v2.0"
+    user_name: "admin"
+    tenant_name: "admin"
+    password: "secrete"
+cors: "*"
+logging:
+    stderr:
+        enabled: true
+        level: INFO
+    file:
+        enabled: true
+        level: INFO
+        filename: ./gohan.log

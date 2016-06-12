@@ -1,0 +1,244 @@
+schemas:
+- description: Routers
+  id: router
+  parent: ""
+  plural: routers
+  prefix: /v2.0
+  metadata:
+    state_versioning: true
+  schema:
+    properties:
+      id:
+        description: id.
+        permission:
+        - create
+        title: ID
+        type: string
+        unique: true
+        format: uuid
+      host_name:
+        default: ""
+        description: host name.
+        permission:
+        - create
+        title: host_name
+        type: string
+        unique: false
+      mgmt_addr:
+        default: ""
+        description: management ipaddress.
+        permission:
+        - create
+        title: mgmt_addr
+        type: string
+        unique: false
+      router_id:
+        default: ""
+        description: router id.
+        permission:
+        - create
+        title: router_id
+        type: string
+        unique: false
+      local_as:
+        default: ""
+        description: as number.
+        permission:
+        - create
+        title: local_as
+        type: string
+        unique: false
+      status:
+        default: ""
+        description: router status.
+        permission: []
+        title: Status
+        type: string
+        unique: false
+    propertiesOrder:
+    - id
+    - host_name
+    - mgmt_addr
+    - router_id
+    - local_as
+    - status
+    type: object
+  singular: router
+  title: Router
+- description: Neighbors
+  id: neighbor
+  parent: ""
+  plural: neighbors
+  prefix: /v2.0
+  metadata:
+    state_versioning: true
+  schema:
+    properties:
+      id:
+        description: id.
+        permission:
+        - create
+        title: ID
+        type: string
+        unique: false
+        format: uuid
+      host_name:
+        default: ""
+        description: host name.
+        permission:
+        - create
+        title: host_name
+        type: string
+        unique: false
+      mgmt_addr:
+        default: ""
+        description: management ipaddress.
+        permission:
+        - create
+        title: mgmt_addr
+        type: string
+        unique: false
+      neighbor_addr:
+        default: ""
+        description: neighbor address.
+        permission:
+        - create
+        title: neighbor_addr
+        type: string
+        unique: false
+      peer_as:
+        default: ""
+        description: as number.
+        permission:
+        - create
+        title: peer_as
+        type: string
+        unique: false
+      status:
+        default: ""
+        description: neighbor status.
+        permission: []
+        title: Status
+        type: string
+        unique: false
+    propertiesOrder:
+    - id
+    - host_name
+    - mgmt_addr
+    - neighbor_addr
+    - peer_as
+    - status
+    type: object
+  singular: neighbor
+  title: Neighbor
+- description: policyinfo
+  id: policyinfo
+  parent: ""
+  plural: policyinfos
+  prefix: /v2.0
+  metadata:
+    state_versioning: true
+  schema:
+    properties:
+      id:
+        description: id.
+        permission:
+        - create
+        title: ID
+        type: string
+        unique: false
+        format: uuid
+      host_name:
+        default: ""
+        description: host name.
+        permission:
+        - create
+        title: host_name
+        type: string
+        unique: false
+      mgmt_addr:
+        default: ""
+        description: management ipaddress.
+        permission:
+        - create
+        title: mgmt_addr
+        type: string
+        unique: false
+      policy_name:
+        default: ""
+        description: policy name.
+        permission:
+        - create
+        title: policy_name
+        type: string
+        unique: false
+      statement_name:
+        default: ""
+        description: statement name.
+        permission:
+        - create
+        title: statement_name
+        type: string
+        unique: false
+      statement_action:
+        default: ""
+        description: statement action.
+        permission:
+        - create
+        title: statement_action
+        type: string
+        unique: false
+      route_disposition:
+        default: ""
+        description: route disposition.
+        permission:
+        - create
+        title: route_disposition
+        type: string
+        unique: false
+      apply_direction:
+        default: ""
+        description: apply direction.
+        permission:
+        - create
+        title: apply_direction
+        type: string
+        unique: false
+      apply_neighbor:
+        default: ""
+        description: apply neighbor.
+        permission:
+        - create
+        title: apply_neighbor
+        type: string
+        unique: false
+      exist:
+        default: ""
+        description: exist.
+        permission:
+        - create
+        title: exist
+        type: string
+        unique: false
+      status:
+        default: ""
+        description: neighbor status.
+        permission: []
+        title: Status
+        type: string
+        unique: false
+    propertiesOrder:
+    - id
+    - host_name
+    - mgmt_addr
+    - policy_name
+    - statement_name
+    - statement_action
+    - route_disposition
+    - apply_direction
+    - apply_neighbor
+    - exist
+    - status
+    type: object
+  singular: policyinfo
+  title: Policyinfo
